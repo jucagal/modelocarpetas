@@ -1,4 +1,20 @@
-<input *ngIf="blocksNames.length === 1" type="file" (change)="onFolderSelected($event)" webkitdirectory multiple/>
+<p-dialog [(visible)]="showModal"
+          [transitionOptions]="'0ms'"
+          [header]="headerFile"
+          [showHeader]="true"
+          [draggable]="false"
+          [resizable]="false"
+          [closable]="true"
+          [modal]="true"
+          [dismissableMask]="true"
+          [style]="{width: '50%', height: '80%'}">
+  <pdf-viewer [src]="pdfBytes"
+              [original-size]="false"
+              style="width: 100%; height: 100%"
+  ></pdf-viewer>
+</p-dialog>
+
+<input *ngIf="blocksNames.length === 1" type="file" (change)="onFolderSelected($event)" multiple/>
 <div class="general-block">
   <h2>Archivos cargados</h2>
   <div cdkDropList
@@ -6,7 +22,9 @@
        [cdkDropListConnectedTo]="blocksNames"
        class="list"
        (cdkDropListDropped)="drop($event)">
-    <div class="box" *ngFor="let item of allFileList" cdkDrag>{{item.name}}</div>
+    <div class="box" *ngFor="let item of allFileList" cdkDrag>{{item.name}}
+      <button (click)="callModal(item)">AAA</button>
+    </div>
   </div>
 </div>
 
@@ -19,6 +37,10 @@
        [cdkDropListConnectedTo]="blocksNames"
        class="list"
        (cdkDropListDropped)="drop($event)">
-    <div class="box" *ngFor="let item of groupsFileList[i]" cdkDrag>{{item.name}}</div>
+    <div class="box" *ngFor="let item of groupsFileList[i]" cdkDrag>
+      {{item.name}}
+      <button (click)="callModal(item)">AAA</button>
+    </div>
   </div>
 </div>
+
